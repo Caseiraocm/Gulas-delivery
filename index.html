@@ -360,7 +360,7 @@ const phoneMask=value=>{const d=digits(value).slice(0,11);if(d.length<=2)return 
 const orderMinutes=o=>Math.max(0,Math.floor((Date.now()-new Date(o.created_at).getTime())/60000));
 const orderWaitHtml=o=>{const m=orderMinutes(o),late=m>=35&&!['entregue','cancelado'].includes(o.status);return `<span class="waitBadge ${late?'late':''}">${late?'⚠️ ':''}${m} min</span>`};
 const validPhone=value=>digits(value).length>=10;
-const GULAS_PIX={key:'',display:'A configurar',bank:'A configurar',holder:'Gulas Hamburgueria'};
+const GULAS_PIX={key:'57748825000106',display:'57.748.825/0001-06',bank:'Pix',holder:'GULLA S HAMBURGUERIA LTDA.'};
 
 function renderPixPaymentPanel(){
   const payment=$('#payment'),change=$('#changeFor');if(!payment)return;
