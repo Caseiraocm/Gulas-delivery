@@ -169,6 +169,15 @@ document.addEventListener('DOMContentLoaded',()=>{
   window.addEventListener('resize',syncHeaderHeight,{passive:true});
 });
 </script>
+
+<style id="gulas-white-background-final-fix">
+/* Correção final: força o fundo principal do cardápio para branco. */
+html, body { background: #ffffff !important; }
+body { background-image: none !important; color: var(--txt); }
+body::before { display: none !important; }
+.wrap { background: #ffffff !important; }
+.cartbar { background: linear-gradient(180deg, transparent, rgba(255,255,255,.98) 34%) !important; }
+</style>
 </head>
 <body>
 <header class="top"><div class="topin"><div class="brand"><div class="brandMark" aria-hidden="true">GU</div><h1 id="storeName">Gullas Hamburgueria</h1><div class="brandMetaRow"><div id="storeStatus" class="status">Carregando cardápio...</div><time id="liveClock" class="liveClock" aria-label="Horário atual">--:--:--</time></div></div><button class="headbtn" id="trackBtn">Acompanhar</button></div></header>
