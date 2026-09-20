@@ -90,6 +90,74 @@ button,.card,.tableitem,.metric,.financeCard,.quickbtn,.chip{transition:transfor
   }
 }
 </style>
+<style id="gulas-light-theme">
+/* Tema claro Gullas: mais luminosidade sem perder a identidade preto e branco. */
+:root{
+  --bg:#f5f5f3;
+  --panel:#ffffff;
+  --panel2:#f2f2ef;
+  --line:#deded9;
+  --txt:#171717;
+  --muted:#696965;
+  --shadow:0 14px 38px rgba(24,24,24,.10);
+  --shadow-soft:0 7px 22px rgba(24,24,24,.075)
+}
+html{background:#f5f5f3}
+body{
+  background:linear-gradient(180deg,#ffffff 0,#f7f7f5 240px,#f3f3f0 100%);
+  color:var(--txt)
+}
+body:before{display:none}
+.top{
+  background:rgba(12,12,13,.96);
+  border-bottom-color:rgba(255,255,255,.10);
+  box-shadow:0 8px 28px rgba(0,0,0,.16)
+}
+.brand h1{color:#fff}.status{color:#b8b8b5}.status.open{color:#7ee2a8}.status.closed{color:#ff9a9e}
+.headbtn{background:#202024;border-color:#3c3c40;color:#fff}.headbtn:hover{background:#2a2a2f;border-color:#55555b}
+.banner{box-shadow:0 12px 30px rgba(0,0,0,.13)}
+.search{
+  background-color:#fff;
+  color:#171717;
+  border-color:#d8d8d3;
+  box-shadow:0 7px 20px rgba(20,20,20,.065);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='none' stroke='%23666662' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='9' cy='9' r='6'/%3E%3Cpath d='m14 14 4 4'/%3E%3C/svg%3E")
+}
+.search::placeholder{color:#858580}
+.quickbtn{background:#fff;border-color:#deded9;color:#272725;box-shadow:0 4px 13px rgba(20,20,20,.045)}
+.quickbtn:hover{background:#f7f7f4;border-color:#bdbdb7}
+.chip{background:#fff;border-color:#d8d8d3;color:#4d4d49}
+.chip.on{color:#fff}
+.card{
+  background:#fff;
+  border-color:#e0e0db;
+  box-shadow:0 10px 28px rgba(20,20,20,.085)
+}
+.card:hover{border-color:rgba(201,81,22,.38);box-shadow:0 16px 36px rgba(20,20,20,.13)}
+.pic{background:#ecece8;color:#777772}
+.name,.price{color:#171717}.desc{color:#6b6b67}.old{color:#92928d}
+.empty{background:#fff;color:#6b6b67}
+.cartbar{background:linear-gradient(180deg,transparent,rgba(245,245,243,.98) 34%)}
+.overlay{background:rgba(12,12,12,.58)}
+.sheet,.sheet.full{background:linear-gradient(180deg,#fff,#f7f7f5);color:#171717;border-color:#d7d7d2;box-shadow:0 -24px 70px rgba(0,0,0,.25)}
+.sheeth{background:linear-gradient(180deg,#fff 74%,rgba(255,255,255,.94));border-bottom-color:#e6e6e1}
+.sheeth h2,.sumrow.total,.sectionTitle{color:#171717}
+.x{background:#f1f1ee;border-color:#d5d5d0;color:#171717}
+.field label{color:#62625e}
+.in,.sel,.ta{background:#fff;color:#171717;border-color:#d5d5d0}
+.modalNav button,.secondary{background:#f2f2ef;color:#242422;border-color:#d7d7d2}
+.seg{background:#eeeeea;border-color:#d6d6d1}.seg button{color:#555550}.seg button.on{background:#171717;color:#fff;box-shadow:0 5px 14px rgba(0,0,0,.16)}
+.lineitem{border-color:#e0e0dc}.sum{border-color:#d8d8d3}.sumrow{color:#555550}
+.qty button{background:#f2f2ef;color:#171717;border-color:#d4d4cf}
+.addon,.trackbox,.cartBreakdown,.installStep{background:#fff;border-color:#dbdbd6;color:#232321}
+.notice{background:#eef5ff;border-color:#cdddf2;color:#31557c}
+.operationHint{background:#fff7eb;color:#78532d;border-color:#eed8bd}
+.loyaltyBox{background:linear-gradient(145deg,#fff6ed,#fff);border-color:#e9c4a9}
+.loyaltyTrack{background:#eadfd6}
+.siteFooter{color:#777772}
+.appToast{background:#252527;color:#fff}
+@media(max-width:640px){.admbar{background:rgba(255,255,255,.96)}}
+</style>
 <script>
 /* Calcula a altura real do cabeçalho para o banner não ficar escondido atrás dele. */
 document.addEventListener('DOMContentLoaded',()=>{
