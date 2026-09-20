@@ -571,7 +571,9 @@ html,body{background:var(--bg);color:var(--txt)}body{background:linear-gradient(
 .siteFooter{margin:34px auto 82px;padding:22px 12px 0;border-top:1px solid #dfe3e8;color:#737a83;text-align:center;font-size:12px;font-weight:700;letter-spacing:.01em}
 @media(max-width:640px){.admbar{background:rgba(247,248,250,.96)}.sheet.full{background:#f7f8fa}}
 `;document.head.appendChild(lightThemeStyle);
-function customerCategoryRank(category){const c=String(category||'Outros').toLowerCase();if(c.includes('hamb'))return 0;if(c.includes('combo'))return 1;if(c.includes('batata'))return 2;if(c.includes('bebida'))return 3;return 4}
+const CUSTOMER_CATEGORY_ORDER=['burguers artesanais','burguers tradicionais','combos especiais','outras bebidas','refrigerantes lata','refrigerantes 1l','sucos','vitaminas','porcoes','monte seu pastel','entradas e petiscos','molhos do gullas'];
+function customerCategoryKey(category){return String(category||'Outros').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase()}
+function customerCategoryRank(category){const c=customerCategoryKey(category),exact=CUSTOMER_CATEGORY_ORDER.indexOf(c);if(exact>=0)return exact;if(c.includes('artesanal'))return 0;if(c.includes('tradicional'))return 1;if(c.includes('combo'))return 2;if(c.includes('bebida'))return 3;if(c.includes('refrigerante'))return 4;if(c.includes('suco'))return 6;if(c.includes('vitamina'))return 7;if(c.includes('batata')||c.includes('porcao'))return 8;if(c.includes('pastel'))return 9;if(c.includes('entrada')||c.includes('petisco'))return 10;if(c.includes('molho'))return 11;return 99}
 const renderCatalogCategoryOrderBase=renderCatalog;renderCatalog=function(){if(Array.isArray(data?.products))data.products.sort((a,b)=>customerCategoryRank(a.category)-customerCategoryRank(b.category)||Number(priceOf(a))-Number(priceOf(b))||String(a.name||'').localeCompare(String(b.name||''),'pt-BR'));return renderCatalogCategoryOrderBase()};
 let operationalMode=null;
 function leaveOperationalMode(){operationalMode=null;closeModal();window.scrollTo({top:0,behavior:'smooth'});if($('#search'))$('#search').value='';search='';cat='Todos';if(data.products?.length)renderCatalog()}
