@@ -1169,5 +1169,42 @@ body{background:linear-gradient(180deg,#15171b 0,#1b1d21 265px,#141519 100%);col
 .trackbox{background:#202227;border-color:#41444a}.dot.done{background:#d6a329}
 @media(max-width:520px){body{background:linear-gradient(180deg,#15171b 0,#1b1d21 235px,#141519 100%)}}
 </style>
+<style id="gullas-pastel-builder-v1">
+.pastelBuilderIntro{margin:0 0 12px;padding:12px 14px;border:1px solid #4a4d54;border-radius:14px;background:#202227;color:#d7d8db}
+.pastelGroup{margin:14px 0;border:1px solid #41444a;border-radius:16px;overflow:hidden;background:#1d1f23}
+.pastelGroupHead{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 14px;background:#25272c}
+.pastelGroupHead b{color:#fff}.pastelGroupHead span{font-size:12px;color:#f0c85e;font-weight:850}
+.pastelOption{display:flex;align-items:center;gap:10px;padding:13px 14px;border-top:1px solid #393c42;color:#f3f3f3;font-weight:750;cursor:pointer}
+.pastelOption input{width:21px;height:21px;accent-color:#d6a329}
+.pastelOption small{margin-left:auto;color:#aeb1b6;font-weight:650}
+#confirmAdd:disabled{opacity:.52;cursor:not-allowed;filter:saturate(.45)}
+</style>
+<script>
+(()=>{
+  const regularOpenProduct=openProduct;
+  const pastelCount=p=>{const m=String(p?.name||'').match(/^Pastel\s+([123])\s+Recheio/i);return m?Number(m[1]):0};
+  const optionLabel=(name,prefix)=>String(name||'').slice(prefix.length).trim();
+  openProduct=function(id){
+    const p=data.products.find(x=>x.id===id),required=pastelCount(p);
+    if(!p||!required)return regularOpenProduct(id);
+    const available=allowedAddons(p),fillPrefix='Recheio:',freePrefix='Acréscimo gratuito:';
+    const fillings=available.filter(a=>String(a.name||'').startsWith(fillPrefix));
+    const freeExtras=available.filter(a=>String(a.name||'').startsWith(freePrefix));
+    modal(`<div class="sheeth"><div><h2>${esc(p.name)}</h2><div class="adminSub">Monte seu pastel</div></div><button class="x" data-close>×</button></div>
+      <div class="pastelBuilderIntro">Escolha exatamente <b>${required} recheio${required===1?'':'s'}</b>. Os acréscimos gratuitos são opcionais.</div>
+      <section class="pastelGroup"><div class="pastelGroupHead"><b>Escolha seu recheio</b><span id="pastelFillingCount">0 de ${required}</span></div>${fillings.map(a=>`<label class="pastelOption"><input type="checkbox" data-pastel-filling="${a.id}"><span>${esc(optionLabel(a.name,fillPrefix))}</span><small>Grátis</small></label>`).join('')}</section>
+      <section class="pastelGroup"><div class="pastelGroupHead"><b>Acréscimos gratuitos</b><span id="pastelFreeCount">0 de 5</span></div>${freeExtras.map(a=>`<label class="pastelOption"><input type="checkbox" data-pastel-free="${a.id}"><span>${esc(optionLabel(a.name,freePrefix))}</span><small>Opcional</small></label>`).join('')}</section>
+      <div class="field"><label>Observação do item</label><textarea id="itemNote" class="ta" placeholder="Ex.: retirar cebola, caprichar no recheio..."></textarea></div>
+      <button id="confirmAdd" class="primary" disabled>Escolha ${required} recheio${required===1?'':'s'}</button>`);
+    bindClose();
+    const fillingInputs=[...document.querySelectorAll('[data-pastel-filling]')],freeInputs=[...document.querySelectorAll('[data-pastel-free]')],button=$('#confirmAdd');
+    const update=()=>{const fc=fillingInputs.filter(i=>i.checked).length,xc=freeInputs.filter(i=>i.checked).length;$('#pastelFillingCount').textContent=`${fc} de ${required}`;$('#pastelFreeCount').textContent=`${xc} de 5`;button.disabled=fc!==required;button.textContent=fc===required?`Adicionar ao carrinho • ${fmt(priceOf(p))}`:`Escolha ${required-fc} recheio${required-fc===1?'':'s'}`};
+    fillingInputs.forEach(input=>input.onchange=()=>{if(input.checked&&fillingInputs.filter(i=>i.checked).length>required){input.checked=false;showAppToast(`Este pastel permite ${required} recheio${required===1?'':'s'}.`,'err')}update()});
+    freeInputs.forEach(input=>input.onchange=()=>{if(input.checked&&freeInputs.filter(i=>i.checked).length>5){input.checked=false;showAppToast('Escolha no máximo 5 acréscimos gratuitos.','err')}update()});
+    button.onclick=()=>{const chosenFillings=fillingInputs.filter(i=>i.checked);if(chosenFillings.length!==required){showAppToast(`Escolha exatamente ${required} recheio${required===1?'':'s'}.`,'err');return}const selected=[...chosenFillings,...freeInputs.filter(i=>i.checked)].map(i=>data.addons.find(a=>a.id===(i.dataset.pastelFilling||i.dataset.pastelFree))).filter(Boolean);cart.push({key:crypto.randomUUID(),product:p,addons:selected,note:$('#itemNote').value.trim(),qty:1});closeModal();updateCartBar()};
+    update();
+  };
+})();
+</script>
 </body>
 </html>
